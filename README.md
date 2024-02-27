@@ -1,0 +1,1 @@
+Setting basic repo for flutterflowignore utility.
