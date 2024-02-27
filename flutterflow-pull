@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Initialize default values
+SOURCE_DIR="$(mktemp -d)"
+DESTINATION_DIR="$(pwd)"
+PROJECT_ID=""
+FLUTTERFLOW_TOKEN=""
+
+# Function to show usage
+usage() {
+    echo "Usage: $0 [--source <path>] [--destination <path>] --project-id <id> --flutterflow-token <token>"
+    exit 1
+}
+
+# Parse named parameters
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --source) SOURCE_DIR="$2"; shift ;;
+        --destination) DESTINATION_DIR="$2"; shift ;;
+        --project-id) PROJECT_ID="$2"; shift ;;
+        --flutterflow-token) FLUTTERFLOW_TOKEN="$2"; shift ;;
+        *) usage ;;
+    esac
+    shift
+done
+
+# Check mandatory parameters
+if [[ -z "$PROJECT_ID" || -z "$FLUTTERFLOW_TOKEN" ]]; then
+    echo "Error: --project-id and --flutterflow-token are required."
+    usage
+fi
+
+# Path to the .flutterflowignore file in the destination directory
+FLUTTERFLOWIGNORE_FILE="$DESTINATION_DIR/.flutterflowignore"
+
+# Check if .flutterflowignore exists
+if [ ! -f "$FLUTTERFLOWIGNORE_FILE" ]; then
+    echo ".flutterflowignore file not found in the destination directory."
+    exit 1
+fi
+
+# Use rsync to copy files from source to destination, excluding files as per .flutterflowignore
+rsync -av --exclude-from="$FLUTTERFLOWIGNORE_FILE" --prune-empty-dirs "$SOURCE_DIR"/ "$DESTINATION_DIR"
+
+echo "Files copied successfully, excluding patterns defined in .flutterflowignore."
