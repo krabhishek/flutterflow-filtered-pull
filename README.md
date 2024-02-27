@@ -5,10 +5,10 @@ development does not get overwritten when using the Flutterflow CLI
 # Usage
 
 ```
-./flutterflow-clean-pull --project-id <FlutterFlow Project ID> --flutterflow-token <FlutterFlow CLI Token>
+./flutterflow-filtered-pull --project-id <FlutterFlow Project ID> --flutterflow-token <FlutterFlow CLI Token>
 ```
 add a .flutterflowignore file in the root of your project and treat it just like gitignore
-Any file or folder in .flutterflowignore will not be overwritten when you run flutterflow-clean-pull
+Any file or folder in .flutterflowignore will not be overwritten when you run flutterflow-filtered-pull
 
 requires rsync and flutterflow_cli to be installed on your machine and available in your path
 
