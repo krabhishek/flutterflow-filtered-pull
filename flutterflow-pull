@@ -39,6 +39,11 @@ if [ ! -f "$FLUTTERFLOWIGNORE_FILE" ]; then
     exit 1
 fi
 
+# Pull code from FlutterFlow with FlutterFlow CLI
+
+flutterflowCommand="dart pub global run flutterflow_cli export-code --project $PROJECT_ID --dest $SOURCE_DIR --include-assets --token $FLUTTERFLOW_TOKEN --no-parent-folder"
+eval $flutterflowCommand  
+
 # Use rsync to copy files from source to destination, excluding files as per .flutterflowignore
 rsync -av --exclude-from="$FLUTTERFLOWIGNORE_FILE" --prune-empty-dirs "$SOURCE_DIR"/ "$DESTINATION_DIR"
 
