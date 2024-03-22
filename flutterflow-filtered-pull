@@ -5,10 +5,11 @@ SOURCE_DIR="$(mktemp -d)"
 DESTINATION_DIR="$(pwd)"
 PROJECT_ID=""
 FLUTTERFLOW_TOKEN=""
+INCLUDE_ASSETS=true
 
 # Function to show usage
 usage() {
-    echo "Usage: $0 [--source <path>] [--destination <path>] --project-id <id> --flutterflow-token <token>"
+    echo "Usage: $0 [--source <path>] [--destination <path>] --project-id <id> --flutterflow-token <token> [--no-include-assets]"
     exit 1
 }
 
@@ -19,6 +20,7 @@ while [[ "$#" -gt 0 ]]; do
         --destination) DESTINATION_DIR="$2"; shift ;;
         --project-id) PROJECT_ID="$2"; shift ;;
         --flutterflow-token) FLUTTERFLOW_TOKEN="$2"; shift ;;
+        --no-include-assets) INCLUDE_ASSETS= ;;
         *) usage ;;
     esac
     shift
@@ -41,7 +43,12 @@ fi
 
 # Pull code from FlutterFlow with FlutterFlow CLI
 
-flutterflowCommand="dart pub global run flutterflow_cli export-code --project $PROJECT_ID --dest $SOURCE_DIR --include-assets --token $FLUTTERFLOW_TOKEN --no-parent-folder"
+if [ "$INCLUDE_ASSETS" = true ]; then
+    flutterflowCommand="dart pub global run flutterflow_cli export-code --project $PROJECT_ID --dest $SOURCE_DIR --include-assets --token $FLUTTERFLOW_TOKEN --no-parent-folder"
+else
+    flutterflowCommand="dart pub global run flutterflow_cli export-code --project $PROJECT_ID --dest $SOURCE_DIR --no-include-assets --token $FLUTTERFLOW_TOKEN --no-parent-folder"
+fi
+
 eval $flutterflowCommand  
 
 # Use rsync to copy files from source to destination, excluding files as per .flutterflowignore
