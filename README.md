@@ -7,7 +7,7 @@ Control the files or directories you do not wish to overrwrite when you pull cod
 # Usage
 
 ```
-./flutterflow-filtered-pull --project-id <FlutterFlow Project ID> --flutterflow-token <FlutterFlow CLI Token>
+./flutterflow-filtered-pull --project-id <FlutterFlow Project ID> --flutterflow-token <FlutterFlow CLI Token> [--no-include-assets] [--branch <Branch Name>]
 ```
 
 Add a `.flutterflowignore` file in the root of your project and treat it just like `.gitignore` file.
