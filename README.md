@@ -10,6 +10,10 @@ Control the files or directories you do not wish to overrwrite when you pull cod
 ./flutterflow-filtered-pull --project-id <FlutterFlow Project ID> --flutterflow-token <FlutterFlow CLI Token> [--no-include-assets] [--branch <Branch Name>]
 ```
 
+Download this project and put the `flutterflow-filtered-pull` file in the base of your local FlutterFlow project directory.
+
+Before the first usage, you will need to make the file executable by running `chmod +x flutterflow-filtered-pull` in a Terminal. 
+
 Add a `.flutterflowignore` file in the root of your project and treat it just like `.gitignore` file.
 
 Any file or folder in `.flutterflowignore` will not be overwritten when you run `flutterflow-filtered-pull`.
