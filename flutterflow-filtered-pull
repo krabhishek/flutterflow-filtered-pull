@@ -7,10 +7,11 @@ PROJECT_ID=""
 FLUTTERFLOW_TOKEN=""
 INCLUDE_ASSETS=true
 BRANCH_NAME=""
+ENDPOINT=""
 
 # Function to show usage
 usage() {
-    echo "Usage: $0 [--source <path>] [--destination <path>] --project-id <id> --flutterflow-token <token> [--no-include-assets]"
+    echo "Usage: $0 [--source <path>] [--destination <path>] -p <id> -t <token> [--no-include-assets] [-b <branch>] [-e <endpoint>]"
     exit 1
 }
 
@@ -19,10 +20,11 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         --source) SOURCE_DIR="$2"; shift ;;
         --destination) DESTINATION_DIR="$2"; shift ;;
-        --project-id) PROJECT_ID="$2"; shift ;;
-        --flutterflow-token) FLUTTERFLOW_TOKEN="$2"; shift ;;
+        -p|--project) PROJECT_ID="$2"; shift ;;
+        -t|--token) FLUTTERFLOW_TOKEN="$2"; shift ;;
         --no-include-assets) INCLUDE_ASSETS= ;;
-        --branch) BRANCH_NAME="$2"; shift ;;
+        -b|--branch-name) BRANCH_NAME="$2"; shift ;;
+        -e|--endpoint) ENDPOINT="$2"; shift ;;
         *) usage ;;
     esac
     shift
@@ -30,7 +32,7 @@ done
 
 # Check mandatory parameters
 if [[ -z "$PROJECT_ID" || -z "$FLUTTERFLOW_TOKEN" ]]; then
-    echo "Error: --project-id and --flutterflow-token are required."
+    echo "Error: -p/--project and -t/--token are required."
     usage
 fi
 
@@ -44,17 +46,21 @@ if [ ! -f "$FLUTTERFLOWIGNORE_FILE" ]; then
 fi
 
 # Pull code from FlutterFlow with FlutterFlow CLI
+flutterflowCommand="dart pub global run flutterflow_cli export-code --project $PROJECT_ID --dest $SOURCE_DIR --token $FLUTTERFLOW_TOKEN --no-parent-folder"
 
 if [ "$INCLUDE_ASSETS" = true ]; then
-    flutterflowCommand="dart pub global run flutterflow_cli export-code --project $PROJECT_ID --dest $SOURCE_DIR --include-assets --token $FLUTTERFLOW_TOKEN --no-parent-folder"
+    flutterflowCommand="$flutterflowCommand --include-assets"
 else
-    flutterflowCommand="dart pub global run flutterflow_cli export-code --project $PROJECT_ID --dest $SOURCE_DIR --no-include-assets --token $FLUTTERFLOW_TOKEN --no-parent-folder"
+    flutterflowCommand="$flutterflowCommand --no-include-assets"
 fi
 
 if [ -n "$BRANCH_NAME" ]; then
     flutterflowCommand="$flutterflowCommand --branch-name $BRANCH_NAME"
 fi
 
+if [ -n "$ENDPOINT" ]; then
+    flutterflowCommand="$flutterflowCommand --endpoint $ENDPOINT"
+fi
 
 eval $flutterflowCommand  
 
