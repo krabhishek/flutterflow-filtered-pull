@@ -30,3 +30,7 @@ Then, add a `.flutterflowignore` file in the root of your project and treat it j
 By default, the `--include-assets` and `--no-parent-folder` flags of the CLI tool are included in this operation, so files will be fetched directly into the current directory.
 
 The simplest method to create the command is to copy and paste the CLI command from FlutterFlow and modify it slightly: remove `flutterflow export-code` and replace with `./flutterflow-filtered-pull`.
+
+![cli (1)](https://github.com/user-attachments/assets/afef0cc5-a8f6-4ab1-8074-942e7cef9529)
+
+
