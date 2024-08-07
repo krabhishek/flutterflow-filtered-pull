@@ -6,7 +6,7 @@ Control the files or directories you do not wish to overrwrite when you pull cod
 
 Any file or folder in `.flutterflowignore` will not be overwritten when you run `flutterflow-filtered-pull`.
 
-# Installation
+## Installation
 
 Download this project and put the `flutterflow-filtered-pull` file in the base of your local FlutterFlow project directory.
 
@@ -19,15 +19,14 @@ Before the first usage, you will need to make the file executable by running:
 chmod +x flutterflow-filtered-pull
 ```
 
-Then, add a `.flutterflowignore` file in the root of your project and treat it just like `.gitignore` file.
+Then, add a `.flutterflowignore` file in the root of your project and treat it just like a `.gitignore` file. See the file in this directory as an example.
 
-
-By default, the `--include-assets` and `--no-parent-folder` flags of the CLI tool are included in this operation, so files will be fetched directly into the current directory.
 
 ## Running the script
 
 ```
 ./flutterflow-filtered-pull --project <FlutterFlow Project ID> --token <FlutterFlow CLI Token> [--no-include-assets] [--branch-name <Branch Name>] [--endpoint <Endpoint>]
 ```
+By default, the `--include-assets` and `--no-parent-folder` flags of the CLI tool are included in this operation, so files will be fetched directly into the current directory.
 
-The simplest method is to copy and paste the CLI command from FlutterFlow and modify it slightly: remove `flutterflow export-code` and replace with `./flutterflow-filtered-pull`.
+The simplest method to create the command is to copy and paste the CLI command from FlutterFlow and modify it slightly: remove `flutterflow export-code` and replace with `./flutterflow-filtered-pull`.
