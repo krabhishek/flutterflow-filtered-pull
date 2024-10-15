@@ -30,6 +30,11 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
+# Check for FLUTTERFLOW_API_TOKEN if token is not passed
+if [[ -z "$FLUTTERFLOW_TOKEN" && -n "$FLUTTERFLOW_API_TOKEN" ]]; then
+    FLUTTERFLOW_TOKEN="$FLUTTERFLOW_API_TOKEN"
+fi
+
 # Check mandatory parameters
 if [[ -z "$PROJECT_ID" || -z "$FLUTTERFLOW_TOKEN" ]]; then
     echo "Error: -p/--project and -t/--token are required."
